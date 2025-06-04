@@ -9,7 +9,27 @@ class StudentController extends Controller
 {
     //affichage
     public function display(Request $request){
-        $student = Etudiant::get();
+        $query = Etudiant::query();
+
+        // Recherche par nom ou par id
+        if($request->has('search')){
+            $search = $request->input('search');
+            $query->where('id_etudiant',$search)
+                  ->orwhere('id_personne',$search);
+        }
+
+        // Filtre par niveau 
+        if($request->has('level') && $request->input !="Tous les niveau"){
+            $query->where('niveau',$request->input('level'));
+        }
+
+        // Filtre pas status
+        if($request->has('status') && $request->input !="Tous les status"){
+            $query->where('status',$request->input('status'));
+        }
+
+        $student =  $query->get();
+
         return response()->json($student);
     }
 

@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\StudentController;
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -21,3 +23,5 @@ Route::get('/students', function () {
         ['id' => 10, 'nom' => 'Julie', 'niveau' => 'L3', 'points' => 3],
     ]);
 });
+
+Route::get('/display', [StudentController::class,'display']);

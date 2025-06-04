@@ -25,3 +25,4 @@ Route::get('/students', function () {
 });
 
 Route::get('/display', [StudentController::class,'display']);
+Route::get('/filter/{id}',[StudentController::class,'filter']);

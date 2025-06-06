@@ -1,0 +1,75 @@
+-- Insertion dans la table personnes
+INSERT INTO personnes (id_personne, nom, prenom) VALUES
+(1, 'Dupont', 'Jean'),
+(2, 'Martin', 'Sophie'),
+(3, 'Leroy', 'Pierre'),
+(4, 'Dubois', 'Marie'),
+(5, 'Moreau', 'Luc'),
+(6, 'Girard', 'Claire'),
+(7, 'Lefevre', 'Antoine'),
+(8, 'Roux', 'Emilie'),
+(9, 'Fournier', 'Paul'),
+(10, 'Lemoine', 'Anne');
+
+-- Insertion dans la table niveaux
+INSERT INTO niveaux (id_niveau, niveau) VALUES
+(1, 'L1'),
+(2, 'L2'),
+(3, 'L3'),
+(4, 'M1'),
+(5, 'M2');
+
+-- Insertion dans la table etudiants
+INSERT INTO etudiants (id_etudiant, id_personne, id_niveau, created_at) VALUES
+(1, 1, 1, '2025-09-01 08:00:00'),
+(2, 2, 1, '2025-09-01 08:00:00'),
+(3, 3, 2, '2025-09-01 08:00:00'),
+(4, 4, 2, '2025-09-01 08:00:00'),
+(5, 5, 3, '2025-09-01 08:00:00'),
+(6, 6, 3, '2025-09-01 08:00:00');
+
+-- Insertion dans la table prof
+INSERT INTO prof (id_prof, id_personne) VALUES
+(1, 7),
+(2, 8),
+(3, 9),
+(4, 10);
+
+-- Insertion dans la table matieres
+INSERT INTO matieres (id_matiere, nom) VALUES
+(1, 'Mathématiques'),
+(2, 'Informatique'),
+(3, 'Reseaux'),
+(4, 'Base_de_donnee'),
+(5, 'Developpement');
+
+-- Insertion dans la table enseignements
+INSERT INTO enseignements (id_enseignement, id_prof, id_matiere, typeEnseignement) VALUES
+(1, 1, 1, 'CM'),
+(2, 1, 1, 'TP'),
+(3, 2, 2, 'CM'),
+(4, 2, 2, 'TP'),
+(5, 3, 3, 'CM'),
+(6, 4, 4, 'TP'),
+(7, 4, 5, 'CM');
+
+-- Insertion dans la table raisons
+INSERT INTO raisons (id_raison, nom, points) VALUES
+(1, 'Participation active', 2),
+(2, 'Absent non justifié', -2),
+(3, 'Aide aux autres', 1),
+(4, 'Retard répété', -1),
+(5, 'Comportement inapproprié', -3);
+
+-- Insertion dans la table attributions
+INSERT INTO attributions (id_attribution, id_etudiant, id_enseignement, id_raison, created_at) VALUES
+(1, 1, 1, 1, '2025-10-01 09:00:00'),
+(2, 1, 2, 4, '2025-10-01 14:00:00'),
+(3, 2, 1, 2, '2025-10-01 09:00:00'),
+(4, 2, 3, 1, '2025-10-02 10:00:00'),
+(5, 3, 3, 3, '2025-10-02 10:00:00'),
+(6, 3, 5, 1, '2025-10-03 11:00:00'),
+(7, 4, 2, 4, '2025-10-01 14:00:00'),
+(8, 4, 4, 1, '2025-10-02 15:00:00'),
+(9, 5, 5, 2, '2025-10-03 11:00:00'),
+(10, 6, 6, 1, '2025-10-03 16:00:00');

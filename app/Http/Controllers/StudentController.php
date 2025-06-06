@@ -11,6 +11,16 @@ class StudentController extends Controller
     public function display(Request $request){
         $query = Etudiant::query();
 
+        // Jointure naturelle entre la tables etudiants et niveaux
+        $query = $query->join("niveaux",'etudiants.id_niveau','=','niveaux.id_niveau');
+        
+        // Jointure naturelle entre la tables etudiants et attributions
+        $query->join("attributions",'etudiants.id_etudiant','=','attributions.id_etudiant');
+        
+        // Jointure naturelle entre la table raisons et attributions
+        $query->join('raisons','attributions.id_raison','=','raisons.id_raison');
+        //$query->select('etudiants.*','niveaux.niveau as niveau','raisons.nom as nom_raison','raisons.point as point');
+
         // Recherche par nom ou par id
         if($request->has('search')){
             $search = $request->input('search');

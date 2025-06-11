@@ -52,10 +52,11 @@ class StudentController extends Controller
             $total_point = $this->point_calcul($student->id_etudiant); 
             $data [] = [
                 'id' => $student->id_etudiant,
-                'nom' => $student->nom,
-                'prenom' => $student->prenom,
+                'nom' => $student->nom ." ". $student->prenom,
                 'niveau' => $student->niveau,
-                'total_points' => $total_point
+                'points' => $total_point,
+                'lastActivity' => 'none',
+                'status' => 'none',
             ];
         }
 

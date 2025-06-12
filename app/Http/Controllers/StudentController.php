@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Etudiant;
 use App\Models\Attribution;
+use App\Models\Raison;
 
 class StudentController extends Controller
 {
@@ -48,15 +49,33 @@ class StudentController extends Controller
         // Creation du data json
         $data = [];
         
-        foreach($students as $student){
-            $total_point = $this->point_calcul($student->id_etudiant); 
+        foreach($students as $student){; 
+            $last_activity = $this->last_activity($student->id_etudiant);
             $data [] = [
                 'id' => $student->id_etudiant,
                 'nom' => $student->nom ." ". $student->prenom,
                 'niveau' => $student->niveau,
-                'points' => $total_point,
-                'lastActivity' => 'none',
+                'points' => $student->calcul_point(),
+                'lastActivity' => $last_activity,
                 'status' => 'none',
+            ];
+        }
+
+        return response()->json($data);
+    }
+
+    public function display_raison(){
+        $raisons = Raison::get();
+
+        $data = [];
+
+        foreach($raisons as $raison){
+            $type = ($raison->point<0)?'malus':'bonus';
+            $data [] = [
+                'id' => $raison->id_raison,
+                'label' => $raison->nom,
+                'points' => $raison->point,
+                'type' => $type
             ];
         }
 
@@ -83,6 +102,33 @@ class StudentController extends Controller
         }
     
         return $total_point;
+    }
+
+    //fonction pour la dernière activité
+    private function last_activity($id_etudiant){
+        $attributions = Attribution::query();
+
+        $last_activity = $attributions->where('id_etudiant',$id_etudiant)
+                                      ->orderBy('created_at','desc')
+                                      ->first();
+
+        return $last_activity->created_at;
+
+    }
+
+    public function store(Request $request) {
+        $validated = $request->validate([
+            'id_etudiant' => 'required|exists:etudiants,id_etudiant',
+            'id_enseignement' => 'required|exists:enseignements,id_enseignement',
+            'id_raison' => 'required|exists:raisons,id_raison',
+        ]);
+
+        $attribution = Attribution::create($validated);
+
+        return response()->json([
+            'message' => 'Attribution enregistrée avec succès.',
+            'data' => $attribution
+        ], 201);
     }
 
 }

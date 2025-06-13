@@ -13,4 +13,5 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/display', [StudentController::class,'display']);
 Route::get('/display_raison', [StudentController::class,'display_raison']);
+Route::post('/attribuer_point', [StudentController::class,'store']);
 //Route::get('/filter/{id}',[StudentController::class,'filter']);

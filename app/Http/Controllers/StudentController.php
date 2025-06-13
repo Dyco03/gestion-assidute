@@ -65,7 +65,9 @@ class StudentController extends Controller
     }
 
     public function display_raison(){
-        $raisons = Raison::get();
+        $raisons = Raison::query()
+                ->orderBy('point','desc')
+                ->get();
 
         $data = [];
 
@@ -112,9 +114,31 @@ class StudentController extends Controller
                                       ->orderBy('created_at','desc')
                                       ->first();
 
-        return $last_activity->created_at;
+        if($last_activity){
+            return $last_activity->created_at;
+        }
+        else{
+            return null;
+        }
+        
 
     }
+    // Fonction pour stocker une attribution
+
+    public function store(Request $request){
+
+        $data = $request->validate([
+            'id_etudiant' => "required|integer",
+            'id_raison'=> 'required|integer',
+            'id_enseignement' => 'required|integer',
+        ]);
+
+        $attribution = Attribution::create($data);
+
+        return response()->json($data);
+    }
+
+    /*
 
     public function store(Request $request) {
         $validated = $request->validate([
@@ -130,5 +154,7 @@ class StudentController extends Controller
             'data' => $attribution
         ], 201);
     }
+       
+    */
 
 }
